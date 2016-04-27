@@ -64,9 +64,6 @@ Plugin 'gorodinskiy/vim-coloresque'
 "Make multiple edits
 Plugin 'terryma/vim-multiple-cursors'
 
-"Vim Profiling
-Plugin 'hyiltiz/vim-plugins-profile'
-
 "Python indent
 Plugin 'vim-scripts/indentpython.vim'
 
