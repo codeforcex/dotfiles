@@ -71,16 +71,7 @@ set encoding=utf-8
 set ffs=unix,dos,mac
 
 "Theme
-if &t_Co >= 256 || has("gui_running")
-    colorscheme monokai
-endif
-
-if &t_Co > 2 || has("gui_running")
-    syntax on
-endif
-
-"Dark background
-set background=dark
+colorscheme monokai
 
 "Line numbers are necessery
 set number
