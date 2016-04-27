@@ -12,9 +12,6 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-"Undo Tree
-Plugin 'mbbill/undotree'
-
 "Better Start Screen
 Plugin 'mhinz/vim-startify'
 
@@ -48,9 +45,6 @@ Plugin 'osyo-manga/vim-over'
 
 "Autocomplete
 Plugin 'Valloric/YouCompleteMe'
-
-"Faster navigation
-Plugin 'easymotion/vim-easymotion'
 
 "Highlight color codes
 Plugin 'gorodinskiy/vim-coloresque'
@@ -160,9 +154,6 @@ let mapleader =","
 
 "Align python comments
 nnoremap # :Tabularize/#/<cr>
-
-"Show undotre
-nnoremap <leader>gu :UndotreeToggle<cr>
 
 "vimrc edit/source
 nnoremap <leader>v :edit! $MYVIMRC<cr>
