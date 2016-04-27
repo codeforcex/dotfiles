@@ -18,6 +18,7 @@ alias zshc="sudo vim ~/.zshrc"
 alias vimc="sudo vim ~/.vimrc"
 alias tmuxc="sudo vim ~/.tmux.conf"
 alias ke="xinput float 14"
+alias tmux="tmux -2"
 
 alias res="sudo service lightdm restart"
 alias reboot="sudo reboot"
@@ -35,6 +36,5 @@ NPM_PACKAGES="${HOME}/.npm-packages"
 NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 PATH="$NPM_PACKAGES/bin:$PATH"
 MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
-
 
 
