@@ -27,6 +27,9 @@ Plugin 'itchyny/lightline.vim'
 "Full Screen for GVim
 Plugin 'lambdalisue/vim-fullscreen'
 
+"Tslime
+Plugin 'jgdavey/tslime.vim'
+
 "Toggle cursor according to mode terminal
 Plugin 'jszakmeister/vim-togglecursor'
 
