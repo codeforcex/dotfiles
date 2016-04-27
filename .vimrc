@@ -1,6 +1,7 @@
-"  =============================================================================
-"  CodeForceX VimRc
-"  =============================================================================
+" ==============================================================================
+" CodeForceX VimRc
+" Written for for python with tmux, gnome terminal and ubuntu.
+" ==============================================================================
 
 " VUNDLE
 " ==============================================================================
@@ -11,6 +12,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+"Init. Vundle
 Plugin 'VundleVim/Vundle.vim'
 
 " Better Start Screen
@@ -50,6 +52,9 @@ Plugin 'osyo-manga/vim-over'
 " Autocomplete
 Plugin 'Valloric/YouCompleteMe'
 
+"Todo list vim
+Plugin 'freitass/todo.txt-vim'
+
 " Highlight color codes
 Plugin 'gorodinskiy/vim-coloresque'
 
@@ -75,14 +80,22 @@ set ffs=unix,dos,mac
 " Theme
 colorscheme monokai
 
-" Line numbers are necessery
+" Higilight Cross
+set cursorline
+set cursorcolumn
+
+" Line numbers/Title
+set title
+set titleold=
 set number
+set numberwidth=5
 
 " Use external clipboard
 set clipboard=unnamed
 
 " Automatically indent code
 set autoindent
+set smartindent
 
 " Auto read when file is changed from outside
 set autoread
@@ -112,6 +125,9 @@ set nobackup
 set noswapfile
 set nowritebackup
 
+" Hate modelines
+set modelines=0
+
 " Allow backspacing over any char in insert mode
 set backspace=indent,eol,start
 
@@ -124,13 +140,13 @@ set guioptions-=L
 " Hide buffers on close
 set hidden
 
-" operate across lines regardless of the underlying text
+" Operate across lines regardless of the underlying text
 set virtualedit=block
 
 " Dont use /g when searching
 set gdefault
 
-" Make Esc work faster"
+" Make Esc work faster
 set ttimeoutlen=50
 
 " Searching
@@ -149,15 +165,15 @@ set list listchars=tab:»·,trail:·,nbsp:·
 
 " Paste mode
 set pastetoggle=<F2>
-au InsertLeave * set nopaste
+au InsertLeave  set nopaste
 
 " Useful for creating more mappings
-let mapleader =" ,"
+let mapleader =","
 
 " Align python comments
 nnoremap # :Tabularize/#/<cr>
 
-" vimrc edit/source
+" Vimrc edit/source
 nnoremap <leader>v :edit! $MYVIMRC<cr>
 nnoremap <leader>/ :source $MYVIMRC<cr>
 
@@ -165,15 +181,14 @@ nnoremap <leader>/ :source $MYVIMRC<cr>
 nnoremap <C-g> :Git add %<cr>:Git commit -m " "
 nnoremap <leader>g :Git push -u origin master<Cr>
 
-" scrolling
-
+" Scrolling
 nnoremap <home> <C-y><C-y><C-y>
 nnoremap <end> <C-e><C-e><C-e>
 
-" fold
+" Fold
 nnoremap <space> za
 
-" switch buffers
+" Switch buffers
 nnoremap <silent> <PageUp> :bp<CR>
 nnoremap <silent> <PageDown> :bn<CR>
 
@@ -208,7 +223,7 @@ nmap <F5> :Tmux !python %<cr>
 
 " Delete text between brackets/par.
 nnoremap d' di'i
-nnoremap d"  di" i
+nnoremap d" di"i
 nnoremap d9 di(i
 nnoremap d[ di[i
 
@@ -239,3 +254,4 @@ let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 " Better indent lines
 let g:indentLine_char = '│'
 let g:indentLine_color_term = 239
+
