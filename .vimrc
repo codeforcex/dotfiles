@@ -100,6 +100,9 @@ set clipboard=unnamed
 "Automatically indent code
 set autoindent
 
+"Auto read when file is changed from outside
+set autoread
+
 "Remove YouCompleteMe errors
 set shortmess+=c
 
@@ -174,15 +177,16 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>v :edit! $MYVIMRC<cr>
 nnoremap <leader>/ :source $MYVIMRC<cr>
 
+"scrolling
+nnoremap <home> <C-y><C-y><C-y>
+nnoremap <end> <C-e><C-e><C-e>
+
 "fold
 nnoremap <space> za
 
 "switch buffers
 nnoremap <silent> <PageUp> :bp<CR>
 nnoremap <silent> <PageDown> :bn<CR>
-
-"Use backspace in normal mode
-nnoremap <BS> i<BS><esc>
 
 "Add blank line above
 nnoremap \ O<esc>
@@ -219,6 +223,9 @@ nnoremap d" di"i
 nnoremap d9 di(i
 nnoremap d[ di[i
 
+"Y yanks from the cursor to the end of the line
+map Y y$
+
 "Close buffer
 nnoremap `` :x!<cr>
 
@@ -229,8 +236,6 @@ nnoremap <leader><F4> :w!<cr>:q!<cr>
 nnoremap / :%s/\s\+$//e<cr>:%s/\n\{3,}/\r\r/e<cr>:w!<cr>
 
 "-----------[Plugin Settings]-----"
-"Git
-set statusline+=%{fugitive#statusline()}
 
 "Syntastic
 set statusline+=%#warningmsg#
