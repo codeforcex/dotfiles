@@ -21,9 +21,6 @@ Plugin 'mhinz/vim-startify'
 "Search Files
 Plugin 'ctrlpvim/ctrlp.vim'
 
-"Tree View
-Plugin 'scrooloose/nerdtree'
-
 "Indent Line Guide
 Plugin 'Yggdroot/indentLine'
 
@@ -48,9 +45,6 @@ Plugin 'tpope/vim-fugitive'
 
 "Preview Replace
 Plugin 'osyo-manga/vim-over'
-
-"Syntax
-Plugin 'scrooloose/syntastic'
 
 "Autocomplete
 Plugin 'Valloric/YouCompleteMe'
@@ -244,20 +238,6 @@ nnoremap <leader><F4> :w!<cr>:q!<cr>
 nnoremap / :%s/\s\+$//e<cr>:%s/\n\{3,}/\r\r/e<cr>:w!<cr>
 
 "-----------[Plugin Settings]-----"
-
-"Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_enable_signs=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_mode_map = { 'mode': 'active',
-            \ 'active_filetypes': [],
-            \ 'passive_filetypes': ['html'] }
-
-"NerdTree
-let g:NERDTreeWinSize=20
-let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
 
 "CtrlP
 let g:ctrlp_map = '<c-p>'
