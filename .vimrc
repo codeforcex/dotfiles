@@ -185,6 +185,7 @@ nnoremap <C-g> :Git add %<cr>:Git commit -m ""
 nnoremap <leader>g :Git push -u origin master<Cr>
 
 "scrolling
+
 nnoremap <home> <C-y><C-y><C-y>
 nnoremap <end> <C-e><C-e><C-e>
 
