@@ -70,13 +70,8 @@ filetype plugin indent on
 "-----------[Settings]------------"
 
 "Theme
-if &t_Co >= 256 || has("gui_running")
-    colorscheme monokai
-endif
-
-if &t_Co > 2 || has("gui_running")
-    syntax on
-endif
+colorscheme monokai
+syntax on
 
 "Dark background
 set background=dark
@@ -166,9 +161,8 @@ let mapleader =","
 "Align python comments
 nnoremap # :Tabularize/#/<cr>
 
-"Show undotree/Nerd Tree
+"Show undotre
 nnoremap <leader>gu :UndotreeToggle<cr>
-nnoremap <leader>n :NERDTreeToggle<cr>
 
 "vimrc edit/source
 nnoremap <leader>v :edit! $MYVIMRC<cr>
