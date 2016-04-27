@@ -146,6 +146,9 @@ set virtualedit=block
 "Dont use /g when searching
 set gdefault
 
+" Make Esc work faster"
+set ttimeoutlen=50
+
 "Searching
 set ignorecase
 set smartcase
