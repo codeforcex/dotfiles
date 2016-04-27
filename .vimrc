@@ -177,6 +177,10 @@ nnoremap <leader>n :NERDTreeToggle<cr>
 nnoremap <leader>v :edit! $MYVIMRC<cr>
 nnoremap <leader>/ :source $MYVIMRC<cr>
 
+"Git
+nnoremap <C-g> :Git commit -m ""
+nnoremap <leader>g :Git push -u origin master<Cr>
+
 "scrolling
 nnoremap <home> <C-y><C-y><C-y>
 nnoremap <end> <C-e><C-e><C-e>
