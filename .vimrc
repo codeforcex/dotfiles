@@ -181,7 +181,7 @@ nnoremap <leader>v :edit! $MYVIMRC<cr>
 nnoremap <leader>/ :source $MYVIMRC<cr>
 
 "Git
-nnoremap <C-g> :Git commit -m ""
+nnoremap <C-g> :Git add %<cr>:Git commit -m ""
 nnoremap <leader>g :Git push -u origin master<Cr>
 
 "scrolling
