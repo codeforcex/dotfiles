@@ -43,9 +43,6 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'tpope/vim-surround'
 Plugin 'jiangmiao/auto-pairs'
 
-" Git
-Plugin 'tpope/vim-fugitive'
-
 " Preview Replace
 Plugin 'osyo-manga/vim-over'
 
@@ -176,10 +173,6 @@ nnoremap # :Tabularize/#/<cr>
 " Vimrc edit/source
 nnoremap <leader>v :edit! $MYVIMRC<cr>
 nnoremap <leader>/ :source $MYVIMRC<cr>
-
-" Git
-nnoremap <C-g> :Git add %<cr>:Git commit -m " "
-nnoremap <leader>g :Git push -u origin master<Cr>
 
 " Scrolling
 nnoremap <home> <C-y><C-y><C-y>
