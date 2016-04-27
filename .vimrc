@@ -63,16 +63,16 @@ filetype plugin indent on
 
 "-----------[Settings]------------"
 
+"File encoding
+set encoding=utf-8
+set ffs=unix,dos,mac
+
 "Theme
 colorscheme monokai
 syntax on
 
 "Dark background
 set background=dark
-
-"File encoding
-set encoding=utf-8
-set ffs=unix,dos,mac
 
 "Line numbers are necessery
 set number
