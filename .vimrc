@@ -242,65 +242,6 @@ map Y y$
 " =======================================================================
 " PLUGIN SETTINGS /*
 " =======================================================================
-"File Explorer /*
-fun! VexToggle(dir)
-	if exists("t:vex_buf_nr")
-		call VexClose()
-	else
-		call VexOpen(a:dir)
-	endif
-endf
-
-fun! VexOpen(dir)
-	let g:netrw_browse_split=4    " open files in previous window
-	let vex_width = 25
-
-	execute "Vexplore " . a:dir
-	let t:vex_buf_nr = bufnr("%")
-	wincmd H
-
-	call VexSize(vex_width)
-endf
-
-fun! VexClose()
-	let cur_win_nr = winnr()
-	let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
-
-	1wincmd w
-	close
-	unlet t:vex_buf_nr
-
-	execute (target_nr - 1) . "wincmd w"
-	call NormalizeWidths()
-endf
-
-fun! VexSize(vex_width)
-	execute "vertical resize" . a:vex_width
-	set winfixwidth
-	call NormalizeWidths()
-endf
-
-fun! NormalizeWidths()
-	let eadir_pref = &eadirection
-	set eadirection=hor
-	set equalalways! equalalways!
-	let &eadirection = eadir_pref
-endf
-
-augroup NetrwGroup
-	autocmd! BufEnter  * call NormalizeWidths()
-augroup END
-
-let g:netrw_liststyle=3         " thin (change to 3 for tree)
-let g:netrw_banner=0            " no banner
-
-" Prevent some files/directories from being listed
-let g:netrw_list_hide='\.pyc$,\.pyo$,\.o$,\.swp$,^\.svn/$,^\.DS_Store$'
-" -------------------------------------------------------------------- */
-" Better indent lines /*
-let g:indentLine_char = '│'
-let g:indentLine_color_term = 239
-" -------------------------------------------------------------------- */
 " Synastic /*
 let g:syntastic_error_symbol = " "
 let g:syntastic_warning_symbol = " "
@@ -310,10 +251,6 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_wq = 0
-" -------------------------------------------------------------------- */
-"Insert is always paste /*
-au InsertLeave  * set nopaste
-au InsertEnter  * set paste
 " -------------------------------------------------------------------- */
 " Lightline /*
 let g:bufferline_active_buffer_left = '  '
@@ -409,12 +346,72 @@ endfunction
 function! MyMode()
 	let fname = expand('%t')
 endfunction
-
 " -------------------------------------------------------------------- */
 " Remove trailing spaces /*
 if has("autocmd")
 	" remove trailing white spaces
 	autocmd BufWritePre  * :%s/\s\+$//e
 endif
-" ------------------------------------------------------------------- */ */
+" -------------------------------------------------------------------- */
+"Insert mode is always paste /*
+au InsertLeave  * set nopaste
+au InsertEnter  * set paste
+" -------------------------------------------------------------------- */
+" File Explorer - Need Tree Alternative /*
+" >> Credit : http://ivanbrennan.nyc/blog/2014/01/16/rigging-vims-netrw/
+
+fun! VexToggle(dir)
+	if exists("t:vex_buf_nr")
+		call VexClose()
+	else
+		call VexOpen(a:dir)
+	endif
+endf
+
+fun! VexOpen(dir)
+	let g:netrw_browse_split=4
+	let vex_width = 25
+
+	execute "Vexplore " . a:dir
+	let t:vex_buf_nr = bufnr("%")
+	wincmd H
+
+	call VexSize(vex_width)
+endf
+
+fun! VexClose()
+	let cur_win_nr = winnr()
+	let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
+
+	1wincmd w
+	close
+	unlet t:vex_buf_nr
+
+	execute (target_nr - 1) . "wincmd w"
+	call NormalizeWidths()
+endf
+
+fun! VexSize(vex_width)
+	execute "vertical resize" . a:vex_width
+	set winfixwidth
+	call NormalizeWidths()
+endf
+
+fun! NormalizeWidths()
+	let eadir_pref = &eadirection
+	set eadirection=hor
+	set equalalways! equalalways!
+	let &eadirection = eadir_pref
+endf
+
+augroup NetrwGroup
+	autocmd! BufEnter  * call NormalizeWidths()
+augroup END
+
+let g:netrw_liststyle=3
+let g:netrw_banner=0
+let g:netrw_list_hide='\.pyc$,\.pyo$,\.o$,\.swp$,^\.svn/$,^\.DS_Store$'
+
+
+" ----------------------------------------------------------------- */ */
 " =======================================================================
