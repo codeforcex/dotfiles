@@ -104,7 +104,6 @@ set hlsearch
 set title
 set titleold=
 set number
-set numberwidth=5
 " -------------------------------------------------------------------- */
 " Make Esc work faster /*
 set ttimeoutlen=50
@@ -172,7 +171,6 @@ let mapleader =","
 nmap <F5> :Tmux !python %<cr>
 " -------------------------------------------------------------------- */
 " Folding /*
-nnoremap <space> za
 nnoremap <F6> :set foldlevel=999<cr>
 nnoremap <F6><F6> :set foldlevel=0<cr>
 " -------------------------------------------------------------------- */
@@ -193,11 +191,11 @@ nnoremap `` :x!<cr>
 nnoremap <silent>; :call VexToggle(getcwd())<CR>
 " -------------------------------------------------------------------- */
 " Create splits /*
-nnoremap 11 :sv<cr><c-w><down>
-nnoremap 22 :vs<cr><c-w><right>
+nnoremap 1<tab> :sv<cr><c-w><down>
+nnoremap 2<tab> :vs<cr><c-w><right>
 " -------------------------------------------------------------------- */
 " Switch buffers /*
-nnoremap <silent> <tab> :bp<CR>
+nnoremap <silent> <space> :bp<CR>
 " -------------------------------------------------------------------- */
 " Vimrc edit/source /*
 nnoremap <leader>v :edit! $MYVIMRC<cr>
@@ -205,20 +203,17 @@ nnoremap <leader>/ :source $MYVIMRC<cr>
 " -------------------------------------------------------------------- */
 " Search and Replace /*
 nnoremap ' :/
-nnoremap <leader>' :OverCommandLine<cr>:%s
+nnoremap <leader>' <cr>:%s/a/b/
 " -------------------------------------------------------------------- */
 " Move between splits /*
-noremap <PageUp> <C-w><C-w>
-" -------------------------------------------------------------------- */
-" Resize splits equally /*
-nnoremap <Leader>= <C-w>=
+noremap <Tab> <C-w><C-w>
 " -------------------------------------------------------------------- */
 " Add blank line above /*
 nnoremap \ O<esc>
 " -------------------------------------------------------------------- */
 " Move line above/below /*
-nnoremap  j ddkP
-nnoremap  k ddp
+nnoremap  <C-up> ddkP
+nnoremap  <C-down> ddp
 " -------------------------------------------------------------------- */
 " Clear last search with return /*
 nnoremap <CR> :noh<CR><CR>
@@ -243,19 +238,19 @@ map Y y$
 " PLUGIN SETTINGS /*
 " =======================================================================
 " Synastic /*
+let g:syntastic_check_on_wq = 0
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_error_symbol = " "
 let g:syntastic_warning_symbol = " "
 let g:syntastic_style_error_symbol = " "
 let g:syntastic_style_warning_symbol= " "
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_wq = 0
 " -------------------------------------------------------------------- */
 " Lightline /*
-let g:bufferline_active_buffer_left = '  '
-let g:bufferline_active_buffer_right = ' '
 let g:bufferline_show_bufnr = 0
+let g:bufferline_active_buffer_left = '  '
+let g:bufferline_active_buffer_right = '  '
 
 let g:bufferline_echo = 0
 let g:lightline = {
@@ -344,7 +339,7 @@ function! s:syntastic()
 endfunction
 
 function! MyMode()
-	let fname = expand('%t')
+	let fname = expand('%:t')
 endfunction
 " -------------------------------------------------------------------- */
 " Remove trailing spaces /*
@@ -354,8 +349,8 @@ if has("autocmd")
 endif
 " -------------------------------------------------------------------- */
 "Insert mode is always paste /*
-au InsertLeave  * set nopaste
-au InsertEnter  * set paste
+au InsertLeave * set nopaste
+au InsertEnter * set paste
 " -------------------------------------------------------------------- */
 " File Explorer - Need Tree Alternative /*
 " >> Credit : http://ivanbrennan.nyc/blog/2014/01/16/rigging-vims-netrw/
@@ -408,10 +403,9 @@ augroup NetrwGroup
 	autocmd! BufEnter  * call NormalizeWidths()
 augroup END
 
-let g:netrw_liststyle=3
 let g:netrw_banner=0
+let g:netrw_liststyle=3
 let g:netrw_list_hide='\.pyc$,\.pyo$,\.o$,\.swp$,^\.svn/$,^\.DS_Store$'
-
 
 " ----------------------------------------------------------------- */ */
 " =======================================================================
