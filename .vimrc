@@ -331,6 +331,7 @@ let g:lightline = {
 			\     'left': [
 			\         ['mode', 'paste'],
 			\         ['modified'],
+			\         ['fugitive'],
 			\         ['bufferline']
 			\     ],
 			\     'right': [
@@ -391,7 +392,7 @@ endfunction
 function! MyFugitive()
 	try
 		if expand('%:t') !~? 'Tagbar' && exists('*fugitive#head')
-			let mark = ' '
+			let mark = '  '
 			let _ = fugitive#head()
 			return strlen(_) ? mark._ : ''
 		endif
@@ -416,8 +417,11 @@ endfunction
 "-----------------------------------------------------------------------------*/
 " Remove trailing spaces /*
 if has("autocmd")
-  " remove trailing white spaces
-  autocmd BufWritePre * :%s/\s\+$//e
+	" remove trailing white spaces
+	autocmd BufWritePre * :%s/\s\+$//e
 endif
 "-----------------------------------------------------------------------------*/
 " =========================================================================== */
+
+" :Git add %
+"
