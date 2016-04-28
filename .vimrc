@@ -201,6 +201,10 @@ nnoremap <silent> <space> :bp<CR>
 nnoremap <leader>v :edit! $MYVIMRC<cr>
 nnoremap <leader>/ :source $MYVIMRC<cr>
 " -------------------------------------------------------------------- */
+" Timestamp /*
+nnoremap <F4> "=strftime("%c")<CR>P
+inoremap <F4> <C-R>=strftime("%c")<CR>
+" -------------------------------------------------------------------- */
 " Search and Replace /*
 nnoremap ' :/
 nnoremap <leader>' <cr>:%s/a/b/
@@ -350,7 +354,6 @@ endif
 " -------------------------------------------------------------------- */
 "Insert mode is always paste /*
 au InsertLeave * set nopaste
-au InsertEnter * set paste
 " -------------------------------------------------------------------- */
 " File Explorer - Need Tree Alternative /*
 " >> Credit : http://ivanbrennan.nyc/blog/2014/01/16/rigging-vims-netrw/
