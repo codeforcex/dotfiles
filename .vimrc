@@ -24,6 +24,9 @@ Plugin 'jgdavey/tslime.vim'
 " Toggle cursor mode wise /*
 Plugin 'jszakmeister/vim-togglecursor'
 "-----------------------------------------------------------------------------*/
+" Git /*
+Plugin 'tpope/vim-fugitive'
+"-----------------------------------------------------------------------------*/
 " Relative numbers /*
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 "-----------------------------------------------------------------------------*/
@@ -32,6 +35,9 @@ Plugin 'jiangmiao/auto-pairs'
 "-----------------------------------------------------------------------------*/
 " Preview Replace /*
 Plugin 'osyo-manga/vim-over'
+"-----------------------------------------------------------------------------*/
+" Synastic /*
+Plugin 'scrooloose/syntastic'
 "-----------------------------------------------------------------------------*/
 " Autocomplete /*
 Plugin 'Valloric/YouCompleteMe'
@@ -234,7 +240,7 @@ nnoremap `` :x!<cr>
 nnoremap <leader><F4> :w!<cr>:q!<cr>
 "-----------------------------------------------------------------------------*/
 " Remove extra blank lines, whitespaces and save /*
-nnoremap / :%s/\s\+$//e<cr>:%s/\n\{3,}/\r\r/e<cr>:w!<cr>
+nnoremap / :w!<cr>
 "-----------------------------------------------------------------------------*/
 " Fold/Unfold all /*
 nnoremap <F6> :set foldlevel=999<cr>
@@ -245,51 +251,51 @@ nnoremap <F6><F6> :set foldlevel=0<cr>
 " ==============================================================================
 "File Explorer /*
 fun! VexToggle(dir)
-    if exists("t:vex_buf_nr")
-        call VexClose()
-    else
-        call VexOpen(a:dir)
-    endif
+	if exists("t:vex_buf_nr")
+		call VexClose()
+	else
+		call VexOpen(a:dir)
+	endif
 endf
 
 fun! VexOpen(dir)
-    let g:netrw_browse_split=4    " open files in previous window
-    let vex_width = 25
+	let g:netrw_browse_split=4    " open files in previous window
+	let vex_width = 25
 
-    execute "Vexplore " . a:dir
-    let t:vex_buf_nr = bufnr("%")
-    wincmd H
+	execute "Vexplore " . a:dir
+	let t:vex_buf_nr = bufnr("%")
+	wincmd H
 
-    call VexSize(vex_width)
+	call VexSize(vex_width)
 endf
 
 fun! VexClose()
-    let cur_win_nr = winnr()
-    let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
+	let cur_win_nr = winnr()
+	let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
 
-    1wincmd w
-    close
-    unlet t:vex_buf_nr
+	1wincmd w
+	close
+	unlet t:vex_buf_nr
 
-    execute (target_nr - 1) . "wincmd w"
-    call NormalizeWidths()
+	execute (target_nr - 1) . "wincmd w"
+	call NormalizeWidths()
 endf
 
 fun! VexSize(vex_width)
-    execute "vertical resize" . a:vex_width
-    set winfixwidth
-    call NormalizeWidths()
+	execute "vertical resize" . a:vex_width
+	set winfixwidth
+	call NormalizeWidths()
 endf
 
 fun! NormalizeWidths()
-    let eadir_pref = &eadirection
-    set eadirection=hor
-    set equalalways! equalalways!
-    let &eadirection = eadir_pref
+	let eadir_pref = &eadirection
+	set eadirection=hor
+	set equalalways! equalalways!
+	let &eadirection = eadir_pref
 endf
 
 augroup NetrwGroup
-    autocmd! BufEnter * call NormalizeWidths()
+	autocmd! BufEnter * call NormalizeWidths()
 augroup END
 
 let g:netrw_liststyle=3         " thin (change to 3 for tree)
@@ -299,72 +305,119 @@ let g:netrw_banner=0            " no banner
 let g:indentLine_char = '│'
 let g:indentLine_color_term = 239
 "-----------------------------------------------------------------------------*/
+" Synastic /*
+let g:syntastic_error_symbol = " "
+let g:syntastic_warning_symbol = " "
+let g:syntastic_style_error_symbol = " "
+let g:syntastic_style_warning_symbol= " "
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_wq = 0
+"-----------------------------------------------------------------------------*/
 "Insert is always paste /*
 au InsertLeave * set nopaste
 au InsertEnter * set paste
 "-----------------------------------------------------------------------------*/
-" Lightline
-let g:bufferline_active_buffer_left = ' ▶ '
-let g:bufferline_active_buffer_right = ' ◀ '
+" Lightline /*
+let g:bufferline_active_buffer_left = '  '
+let g:bufferline_active_buffer_right = ' '
 let g:bufferline_show_bufnr = 0
 
 let g:bufferline_echo = 0
 let g:lightline = {
-            \ 'colorscheme': 'wombat',
-            \ 'active': {
-            \     'left': [
-            \         ['mode', 'paste'],
-            \         ['readonly', 'modified'],
-            \         ['bufferline']
-            \     ],
-            \     'right': [
-            \         ['lineinfo'],
-            \     ]
-            \ },
-            \ 'component': {
-            \     'paste': '%{&paste?"P⩲":""}',
-            \     'readonly': '%{&readonly?"":""}',
-            \     'bufferline': '%{bufferline#refresh_status()}%{MyBufferline()[0]}'.
-            \                   '%#TabLineSel#%{g:bufferline_status_info.current}'.
-            \                   '%#LightLineLeft_active_2#%{MyBufferline()[2]}'
-            \ },
-            \ 'separator': { 'left': '', 'right': '' },
-            \ 'subseparator': { 'left': '', 'right': '' }
-            \ }
+			\ 'colorscheme': 'jellybeans',
+			\ 'active': {
+			\     'left': [
+			\         ['mode', 'paste'],
+			\         ['modified'],
+			\         ['bufferline']
+			\     ],
+			\     'right': [
+			\ [ 'syntastic', 'lineinfo' ], ['percent']
+			\     ]
+			\ },
+			\ 'component': {
+			\     'paste': '%{&paste?"   ":""}',
+			\     'readonly': '%{&readonly?"":""}',
+			\     'bufferline': '%{bufferline#refresh_status()}%{MyBufferline()[0]}'.
+			\                   '%#TabLineSel#%{g:bufferline_status_info.current}'.
+			\                   '%#LightLineLeft_active_2#%{MyBufferline()[2]}'
+			\ },
+			\ 'component_function': {
+			\     'fugitive': 'MyFugitive',
+			\ },
+			\ 'component_expand': {
+			\     'syntastic': 'SyntasticStatuslineFlag',
+			\ },
+			\ 'component_type': {
+			\     'syntastic': 'error',
+			\ },
+			\ 'separator': { 'left': '', 'right': '' },
+			\ 'subseparator': { 'left': '', 'right': '' }
+			\ }
 
 let g:lightline.mode_map = {
-            \ 'n'      : ' ❤ ',
-            \ 'i'      : ' ❥ ⌶ ',
-            \ 'R'      : ' ✖ ',
-            \ 'V'      : ' ʘ ',
-            \ "\<C-v>" : ' ʘ ◈ ',
-            \ }
+			\ 'n'      : '   ',
+			\ 'i'      : '   ',
+			\ 'R'      : '   ',
+			\ 'v'      : '   ',
+			\ "\<C-v>" : '     ',
+			\ }
 
 function! LightLineReadonly()
-    return &readonly ? '' : ''
+	return &readonly ? '' : ''
 endfunction
 
 function! MyBufferline()
-    call bufferline#refresh_status()
-    let b = g:bufferline_status_info.before
-    let c = g:bufferline_status_info.current
-    let a = g:bufferline_status_info.after
-    let alen = strlen(a)
-    let blen = strlen(b)
-    let clen = strlen(c)
-    let w = winwidth(0) * 4 / 10
-    if w < alen+blen+clen
-        let whalf = (w - strlen(c)) / 2
-        let aa = alen > whalf && blen > whalf ? a[:whalf] : alen + blen < w - clen || alen < whalf ? a : a[:(w - clen - blen)]
-        let bb = alen > whalf && blen > whalf ? b[-(whalf):] : alen + blen < w - clen || blen < whalf ? b : b[-(w - clen - alen):]
-        return [(strlen(bb) < strlen(b) ? '...' : '') . bb, c, aa . (strlen(aa) < strlen(a) ? '...' : '')]
-    else
-        return [b, c, a]
-    endif
+	call bufferline#refresh_status()
+	let b = g:bufferline_status_info.before
+	let c = g:bufferline_status_info.current
+	let a = g:bufferline_status_info.after
+	let alen = strlen(a)
+	let blen = strlen(b)
+	let clen = strlen(c)
+	let w = winwidth(0) * 4 / 10
+	if w < alen+blen+clen
+		let whalf = (w - strlen(c)) / 2
+		let aa = alen > whalf && blen > whalf ? a[:whalf] : alen + blen < w - clen || alen < whalf ? a : a[:(w - clen - blen)]
+		let bb = alen > whalf && blen > whalf ? b[-(whalf):] : alen + blen < w - clen || blen < whalf ? b : b[-(w - clen - alen):]
+		return [(strlen(bb) < strlen(b) ? '...' : '') . bb, c, aa . (strlen(aa) < strlen(a) ? '...' : '')]
+	else
+		return [b, c, a]
+	endif
+endfunction
+
+function! MyFugitive()
+	try
+		if expand('%:t') !~? 'Tagbar' && exists('*fugitive#head')
+			let mark = ' '
+			let _ = fugitive#head()
+			return strlen(_) ? mark._ : ''
+		endif
+	catch
+	endtry
+	return ''
+endfunction
+
+augroup AutoSyntastic
+	autocmd!
+	autocmd BufWritePost *py call s:syntastic()
+augroup END
+function! s:syntastic()
+	SyntasticCheck
+	call lightline#update()
 endfunction
 
 function! MyMode()
-    let fname = expand('%t')
+	let fname = expand('%t')
 endfunction
 
+"-----------------------------------------------------------------------------*/
+" Remove trailing spaces /*
+if has("autocmd")
+  " remove trailing white spaces
+  autocmd BufWritePre * :%s/\s\+$//e
+endif
+"-----------------------------------------------------------------------------*/
 " =========================================================================== */
