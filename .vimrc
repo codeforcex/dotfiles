@@ -36,11 +36,17 @@ Plugin 'osyo-manga/vim-over'
 " Autocomplete /*
 Plugin 'Valloric/YouCompleteMe'
 "-----------------------------------------------------------------------------*/
+" Lightline /*
+Plugin 'itchyny/lightline.vim'
+"-----------------------------------------------------------------------------*/
 " Highlight color codes /*
 Plugin 'gorodinskiy/vim-coloresque'
 "-----------------------------------------------------------------------------*/
 " Make multiple edits /*
 Plugin 'terryma/vim-multiple-cursors'
+"-----------------------------------------------------------------------------*/
+" Bufferline /*
+Plugin 'bling/vim-bufferline'
 "-----------------------------------------------------------------------------*/
 " Python indent /*
 Plugin 'vim-scripts/indentpython.vim'
@@ -172,8 +178,7 @@ nnoremap <end> <C-e><C-e><C-e>
 nnoremap <space> za
 "-----------------------------------------------------------------------------*/
 " Switch buffers /*
-nnoremap <silent> <PageUp> :bp<CR>
-nnoremap <silent> <PageDown> :bn<CR>
+nnoremap <silent> <tab> :bp<CR>
 "-----------------------------------------------------------------------------*/
 " Add blank line above /*
 nnoremap \ O<esc>
@@ -190,7 +195,7 @@ nnoremap ' :/
 nnoremap <leader>' :OverCommandLine<cr>:%s
 "-----------------------------------------------------------------------------*/
 " Move between splits /*
-noremap <Tab> <C-w><C-w>
+noremap <PageUp> <C-w><C-w>
 "-----------------------------------------------------------------------------*/
 " Resize splits equally /*
 nnoremap <Leader>= <C-w>=
@@ -240,51 +245,51 @@ nnoremap <F6><F6> :set foldlevel=0<cr>
 " ==============================================================================
 "File Explorer /*
 fun! VexToggle(dir)
-	if exists("t:vex_buf_nr")
-		call VexClose()
-	else
-		call VexOpen(a:dir)
-	endif
+    if exists("t:vex_buf_nr")
+        call VexClose()
+    else
+        call VexOpen(a:dir)
+    endif
 endf
 
 fun! VexOpen(dir)
-	let g:netrw_browse_split=4    " open files in previous window
-	let vex_width = 25
+    let g:netrw_browse_split=4    " open files in previous window
+    let vex_width = 25
 
-	execute "Vexplore " . a:dir
-	let t:vex_buf_nr = bufnr("%")
-	wincmd H
+    execute "Vexplore " . a:dir
+    let t:vex_buf_nr = bufnr("%")
+    wincmd H
 
-	call VexSize(vex_width)
+    call VexSize(vex_width)
 endf
 
 fun! VexClose()
-	let cur_win_nr = winnr()
-	let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
+    let cur_win_nr = winnr()
+    let target_nr = ( cur_win_nr == 1 ? winnr("#") : cur_win_nr )
 
-	1wincmd w
-	close
-	unlet t:vex_buf_nr
+    1wincmd w
+    close
+    unlet t:vex_buf_nr
 
-	execute (target_nr - 1) . "wincmd w"
-	call NormalizeWidths()
+    execute (target_nr - 1) . "wincmd w"
+    call NormalizeWidths()
 endf
 
 fun! VexSize(vex_width)
-	execute "vertical resize" . a:vex_width
-	set winfixwidth
-	call NormalizeWidths()
+    execute "vertical resize" . a:vex_width
+    set winfixwidth
+    call NormalizeWidths()
 endf
 
 fun! NormalizeWidths()
-	let eadir_pref = &eadirection
-	set eadirection=hor
-	set equalalways! equalalways!
-	let &eadirection = eadir_pref
+    let eadir_pref = &eadirection
+    set eadirection=hor
+    set equalalways! equalalways!
+    let &eadirection = eadir_pref
 endf
 
 augroup NetrwGroup
-	autocmd! BufEnter * call NormalizeWidths()
+    autocmd! BufEnter * call NormalizeWidths()
 augroup END
 
 let g:netrw_liststyle=3         " thin (change to 3 for tree)
@@ -294,38 +299,72 @@ let g:netrw_banner=0            " no banner
 let g:indentLine_char = '│'
 let g:indentLine_color_term = 239
 "-----------------------------------------------------------------------------*/
-" Status Line  /*
-function! InsertStatuslineColor(mode)
-	if a:mode == 'i'
-		hi statusline guibg=Cyan ctermfg=6 guifg=Black ctermbg=0
-	elseif a:mode == 'r'
-		hi statusline guibg=Purple ctermfg=5 guifg=Black ctermbg=0
-	else
-		hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
-	endif
-endfunction
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
-
-hi statusline guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
-
-set statusline=%f
-set statusline+=%r
-set statusline+=%m
-
-set statusline+=%#error#
-set statusline+=%{&paste?'\ [PASTE]\ ':''}
-set statusline+=%*
-
-set statusline+=\ \|\ Line:%l
-set statusline+=\ Col:%c
-
-set statusline+=\ %=
-set statusline+=\ Total\ Lines:%L
-"-----------------------------------------------------------------------------*/
 "Insert is always paste /*
 au InsertLeave * set nopaste
 au InsertEnter * set paste
 "-----------------------------------------------------------------------------*/
+" Lightline
+let g:bufferline_active_buffer_left = ' ▶ '
+let g:bufferline_active_buffer_right = ' ◀ '
+let g:bufferline_show_bufnr = 0
+
+let g:bufferline_echo = 0
+let g:lightline = {
+            \ 'colorscheme': 'wombat',
+            \ 'active': {
+            \     'left': [
+            \         ['mode', 'paste'],
+            \         ['readonly', 'modified'],
+            \         ['bufferline']
+            \     ],
+            \     'right': [
+            \         ['lineinfo'],
+            \     ]
+            \ },
+            \ 'component': {
+            \     'paste': '%{&paste?"P⩲":""}',
+            \     'readonly': '%{&readonly?"":""}',
+            \     'bufferline': '%{bufferline#refresh_status()}%{MyBufferline()[0]}'.
+            \                   '%#TabLineSel#%{g:bufferline_status_info.current}'.
+            \                   '%#LightLineLeft_active_2#%{MyBufferline()[2]}'
+            \ },
+            \ 'separator': { 'left': '', 'right': '' },
+            \ 'subseparator': { 'left': '', 'right': '' }
+            \ }
+
+let g:lightline.mode_map = {
+            \ 'n'      : ' ❤ ',
+            \ 'i'      : ' ❥ ⌶ ',
+            \ 'R'      : ' ✖ ',
+            \ 'V'      : ' ʘ ',
+            \ "\<C-v>" : ' ʘ ◈ ',
+            \ }
+
+function! LightLineReadonly()
+    return &readonly ? '' : ''
+endfunction
+
+function! MyBufferline()
+    call bufferline#refresh_status()
+    let b = g:bufferline_status_info.before
+    let c = g:bufferline_status_info.current
+    let a = g:bufferline_status_info.after
+    let alen = strlen(a)
+    let blen = strlen(b)
+    let clen = strlen(c)
+    let w = winwidth(0) * 4 / 10
+    if w < alen+blen+clen
+        let whalf = (w - strlen(c)) / 2
+        let aa = alen > whalf && blen > whalf ? a[:whalf] : alen + blen < w - clen || alen < whalf ? a : a[:(w - clen - blen)]
+        let bb = alen > whalf && blen > whalf ? b[-(whalf):] : alen + blen < w - clen || blen < whalf ? b : b[-(w - clen - alen):]
+        return [(strlen(bb) < strlen(b) ? '...' : '') . bb, c, aa . (strlen(aa) < strlen(a) ? '...' : '')]
+    else
+        return [b, c, a]
+    endif
+endfunction
+
+function! MyMode()
+    let fname = expand('%t')
+endfunction
+
 " =========================================================================== */
