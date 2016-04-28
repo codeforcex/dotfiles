@@ -16,16 +16,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-
 " -------------------------------------------------------------------- */
 " Preview color codes /*
 Plugin 'gorodinskiy/vim-coloresque'
 " -------------------------------------------------------------------- */
 " Syntax checking hacks /*
 Plugin 'scrooloose/syntastic'
-" -------------------------------------------------------------------- */
-" Preview of text replace /*
-Plugin 'osyo-manga/vim-over'
 " -------------------------------------------------------------------- */
 " Toggle cursor shape in mode /*
 Plugin 'jszakmeister/vim-togglecursor'
@@ -38,9 +34,6 @@ Plugin 'itchyny/lightline.vim'
 " -------------------------------------------------------------------- */
 "Vim script for text filtering and alignment /*
 Plugin 'godlygeek/tabular'
-" -------------------------------------------------------------------- */
-" Sublime Text style multiple selections for Vim /*
-Plugin 'terryma/vim-multiple-cursors'
 " -------------------------------------------------------------------- */
 " Send command from vim to a running tmux session /*
 Plugin 'jgdavey/tslime.vim'
@@ -169,37 +162,48 @@ set autochdir
 " =======================================================================
 " MAPPINGS /*
 " =======================================================================
-" Paste mode /*
-set pastetoggle=<F2>
+" Save /*
+nnoremap / :w!<cr>
 " -------------------------------------------------------------------- */
-" Useful for creating more mappings /*
+" Leader /*
 let mapleader =","
 " -------------------------------------------------------------------- */
-" Vimrc edit/source /*
-nnoremap <leader>v :edit! $MYVIMRC<cr>
-nnoremap <leader>/ :source $MYVIMRC<cr>
+" Tslmie  /*
+nmap <F5> :Tmux !python %<cr>
+" -------------------------------------------------------------------- */
+" Folding /*
+nnoremap <space> za
+nnoremap <F6> :set foldlevel=999<cr>
+nnoremap <F6><F6> :set foldlevel=0<cr>
 " -------------------------------------------------------------------- */
 " Scrolling /*
 nnoremap <home> <C-y><C-y><C-y>
 nnoremap <end> <C-e><C-e><C-e>
 " -------------------------------------------------------------------- */
-" Fold /*
-nnoremap <space> za
+" Paste mode /*
+set pastetoggle=<F2>
+" -------------------------------------------------------------------- */
+" Indent code /*
+nnoremap <F7> mzgg=G`z`
+" -------------------------------------------------------------------- */
+" Close buffer /*
+nnoremap `` :x!<cr>
+" -------------------------------------------------------------------- */
+" Explore files /*
+nnoremap <silent>; :call VexToggle(getcwd())<CR>
+" -------------------------------------------------------------------- */
+" Create splits /*
+nnoremap 11 :sv<cr><c-w><down>
+nnoremap 22 :vs<cr><c-w><right>
 " -------------------------------------------------------------------- */
 " Switch buffers /*
 nnoremap <silent> <tab> :bp<CR>
 " -------------------------------------------------------------------- */
-" Add blank line above /*
-nnoremap \ O<esc>
+" Vimrc edit/source /*
+nnoremap <leader>v :edit! $MYVIMRC<cr>
+nnoremap <leader>/ :source $MYVIMRC<cr>
 " -------------------------------------------------------------------- */
-" Clear last search with return /*
-nnoremap <CR> :noh<CR><CR>
-" -------------------------------------------------------------------- */
-" Move line above/below /*
-nnoremap  j ddkP
-nnoremap  k ddp
-" -------------------------------------------------------------------- */
-"Searching /*
+" Search and Replace /*
 nnoremap ' :/
 nnoremap <leader>' :OverCommandLine<cr>:%s
 " -------------------------------------------------------------------- */
@@ -209,19 +213,15 @@ noremap <PageUp> <C-w><C-w>
 " Resize splits equally /*
 nnoremap <Leader>= <C-w>=
 " -------------------------------------------------------------------- */
-" Create splits /*
-nnoremap 11 :sv<cr><c-w><down>
-nnoremap 22 :vs<cr><c-w><right>
+" Add blank line above /*
+nnoremap \ O<esc>
 " -------------------------------------------------------------------- */
-" Indent code /*
-nnoremap <F7> mzgg=G`z`
+" Move line above/below /*
+nnoremap  j ddkP
+nnoremap  k ddp
 " -------------------------------------------------------------------- */
-" Switch keys for visual and visual block mode /*
-nnoremap v <C-v>
-nnoremap <C-v> v
-" -------------------------------------------------------------------- */
-"Tslmie  /*
-nmap <F5> :Tmux !python %<cr>
+" Clear last search with return /*
+nnoremap <CR> :noh<CR><CR>
 " -------------------------------------------------------------------- */
 " Delete text between brackets/par. /*
 nnoremap d' di'i
@@ -230,25 +230,13 @@ nnoremap d9 di(i
 nnoremap d[ di[i
 nnoremap d{ di{i
 " -------------------------------------------------------------------- */
-" Explore files /*
-nnoremap ; :call VexToggle(getcwd())<CR>
+" Switch keys for visual and visual block mode /*
+nnoremap v <C-v>
+nnoremap <C-v> v
 " -------------------------------------------------------------------- */
 " Y yanks from the cursor to the end of the line /*
 map Y y$
-" -------------------------------------------------------------------- */
-" Close buffer /*
-nnoremap `` :x!<cr>
-" -------------------------------------------------------------------- */
-" Quit vim /*
-nnoremap <leader><F4> :w!<cr>:q!<cr>
-" -------------------------------------------------------------------- */
-" Remove extra blank lines, whitespaces and save /*
-nnoremap / :w!<cr>
-" -------------------------------------------------------------------- */
-" Fold/Unfold all /*
-nnoremap <F6> :set foldlevel=999<cr>
-nnoremap <F6><F6> :set foldlevel=0<cr>
-" --------------------------------------------------------------------- */ */
+" ----------------------------------------------------------------- */ */
 " =======================================================================
 
 " =======================================================================
