@@ -1,7 +1,7 @@
 " =======================================================================
-" Author:  CodeForceX <codeforcex@protonmail.com>
-" Repo:    http://github.com/codeforcex/dotfiles
-" Version: 1.0
+" Author:       CodeForceX <codeforcex@protonmail.com>
+" Repo:         http://github.com/codeforcex/dotfiles
+" Version:      1.0
 " Last Updated: 28/04/2016
 " =======================================================================
 
