@@ -1,0 +1,33 @@
+alias zr=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
+
+#COPY URL/FULL OUTPUT
+alias cu="echo ' ' && copydir && echo -n 'Path ' && pwd && echo 'copied to clipboard!' && echo ' '"
+
+# TASKS
+alias t='python ~/Tasks/t.py --task-dir ~/Dropbox/Tasks --list tasks'
+alias tc='t | wc -l'
+alias te='t -e'
+alias td='t -f'
+
+#SYSTE
+alias x="exit"
+alias tab="gnome-terminal --tab --tab --tab"
+alias res="sudo service lightdm restart"
+alias restart="reboot"
+alias off="sudo poweroff"
+
+#SEARCH/LIST
+alias ser="sudo find / -type d -name" #exact match
+alias serp="dpkg -L" #package location
+alias lh="ls -a" #list hidden
+
+#AUTOREAD FILE
+alias arf="tail -fi"
+
+#INTERNET
+alias netok="ping -c 10 www.apple.com"
+
+#KEY BINDINGS
+
+#COPY PASTE
+alias cb='xclip -selection c -i' #to copy data from file cb myfile
