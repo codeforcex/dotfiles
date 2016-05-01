@@ -1,6 +1,93 @@
-2016-04-27
+TODO: Vim
+=========================================================
+Something about buffer navigation
+Statusline width for buffers
+Mapping for line case change
+Tabline research
+Buffer Navigation
+Better way to toggle folds
+Better integration with git
+Read things you wish you had known vimrc
+Better search
+Map begennign of line to i instead of a
+Change Fold char to (~)
+Auto increase numbers when press enter
+That color plugin needs to be replaced
+Bookmark folder backup something
+Git wrapper research and something to automate git push
+Visual mode movement
 
-- Custom Folding
-- Line Highlight 
-- Cursor Colum
-- Split des
+TODO: System Install
+=========================================================
+Buy new keyboard
+
+Install Oh My Zsh
+sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+---------------------------------------------------------
+Install Chromium, vim-gnome
+sudo apt-get install chromium-browser vim-gnome
+---------------------------------------------------------
+Install Plank
+sudo add-apt-repository ppa:ricotz/docky #
+sudo apt-get update
+sudo apt-get install plank
+---------------------------------------------------------
+Do whatever but get rid of unity lens
+Install vim
+sudo apt-get install vim-gnome
+---------------------------------------------------------
+Install dropbox
+---------------------------------------------------------
+Install git if necessary
+sudo apt-get install git
+---------------------------------------------------------
+Install Sublime Text
+https://www.sublimetext.com/3
+
+import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler() )  ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20') ).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf ), 'wb' ).write(by)
+
+—– BEGIN LICENSE —–
+Michael Barnes
+Single User License
+EA7E-821385
+8A353C41 872A0D5C DF9B2950 AFF6F667
+C458EA6D 8EA3C286 98D1D650 131A97AB
+AA919AEC EF20E143 B361B1E7 4C8B7F04
+B085E65E 2F5F5360 8489D422 FB8FC1AA
+93F6323C FD7F7544 3F39C318 D95E6480
+FCCC7561 8A4A1741 68FA4223 ADCEDE07
+200C25BE DBBC4855 C4CFB774 C5EC138C
+0FEC1CEF D9DCECEC D3A5DAD1 01316C36
+—— END LICENSE ——
+
+https://raw.githubusercontent.com/codeforcex/dotfiles/master/sublime3pref
+
+Plugins
+Quick File Open
+{
+	    "files": ["~/.vimrc", "~/.zshrc", "~/.tmux.conf"]
+
+}
+
+Theme Watson
+Sail Color Scheme
+Anaconda
+
+---------------------------------------------------------
+Install flatabolous theme
+sudo add-apt-repository ppa:tualatrix/ppa
+sudo apt-get update
+sudo apt-get install ubuntu-tweak
+---------------------------------------------------------
+Install Numix Circle icons
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install numix-icon-theme-circle
+---------------------------------------------------------
+Copy YCM from pendrive
+---------------------------------------------------------
+Uninstall LibreOffice
+Uninstall Other Bloat
+
+TODO : Misc
+Research keyboard
