@@ -8,7 +8,7 @@
 " =======================================================================
 " VUNDLE PLUGIN MANAGER /*
 " =======================================================================
- " Initialize Vundle /*
+" Initialize Vundle /*
 set nocompatible
 filetype off
 
@@ -16,6 +16,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+" -------------------------------------------------------------------- */
+"Vim Bookmarks /*
+Plugin 'MattesGroeger/vim-bookmarks'
 " -------------------------------------------------------------------- */
 " Preview color codes /*
 Plugin 'gorodinskiy/vim-coloresque'
@@ -50,9 +53,6 @@ Plugin 'bling/vim-bufferline'
 " Fast, as-you-type, fuzzy-search code completion engine /*
 Plugin 'Valloric/YouCompleteMe'
 " -------------------------------------------------------------------- */
-" Automatically restoring file's cursor position and folding  /*
-Plugin 'vim-scripts/restore_view.vim'
-" -------------------------------------------------------------------- */
 " Python indent, tries to match closely what's suggested in PEP8 /*
 Plugin 'vim-scripts/indentpython.vim'
 " -------------------------------------------------------------------- */
@@ -70,6 +70,7 @@ filetype plugin indent on
 " =======================================================================
 " Theme /*
 colorscheme monokai
+let g:monokai_thick_border = 0
 " -------------------------------------------------------------------- */
 " Encoding /*
 set encoding=utf-8
@@ -88,9 +89,8 @@ set nowritebackup
 set modelines=0
 set nomodeline
 " -------------------------------------------------------------------- */
-" Cursor Cross /*
+" Cursor /*
 set cursorline
-set cursorcolumn
 " -------------------------------------------------------------------- */
 " Enable mouse /*
 set mouse=a
@@ -173,10 +173,18 @@ nmap <F5> :Tmux !python %<cr>
 " Folding /*
 nnoremap <F6> :set foldlevel=999<cr>
 nnoremap <F6><F6> :set foldlevel=0<cr>
+nnoremap s za
 " -------------------------------------------------------------------- */
 " Scrolling /*
 nnoremap <home> <C-y><C-y><C-y>
 nnoremap <end> <C-e><C-e><C-e>
+" -------------------------------------------------------------------- */
+" Bookmarks /*
+nnoremap <Leader><Leader> :BookmarkToggle <cr>
+nnoremap <Leader>i :BookmarkAnnotate<cr>
+nnoremap <Leader>a :BookmarkShowAll<cr>
+nnoremap <Pagedown> :BookmarkNext<cr>
+nnoremap <Pageup> :BookmarkPrev<cr>
 " -------------------------------------------------------------------- */
 " Paste mode /*
 set pastetoggle=<F2>
@@ -190,20 +198,24 @@ nnoremap `` :x!<cr>
 " Explore files /*
 nnoremap <silent>; :call VexToggle(getcwd())<CR>
 " -------------------------------------------------------------------- */
+"End/Start Line /*
+nnoremap l $a
+nnoremap h ^a
+" -------------------------------------------------------------------- */
 " Create splits /*
 nnoremap 1<tab> :sv<cr><c-w><down>
 nnoremap 2<tab> :vs<cr><c-w><right>
 " -------------------------------------------------------------------- */
 " Switch buffers /*
-nnoremap <silent> <space> :bp<CR>
+nnoremap <silent> b :bp<CR>
+" -------------------------------------------------------------------- */
+" Timestamp /*
+nnoremap <F1> "=strftime("%c")<CR>P
+inoremap <F1> <C-R>=strftime("%c")<CR>
 " -------------------------------------------------------------------- */
 " Vimrc edit/source /*
 nnoremap <leader>v :edit! $MYVIMRC<cr>
-nnoremap <leader>/ :source $MYVIMRC<cr>
-" -------------------------------------------------------------------- */
-" Timestamp /*
-nnoremap <F4> "=strftime("%c")<CR>P
-inoremap <F4> <C-R>=strftime("%c")<CR>
+nnoremap <leader>/ :source $MYVIMRC<cr>:noh<cr>
 " -------------------------------------------------------------------- */
 " Search and Replace /*
 nnoremap ' :/
@@ -250,6 +262,17 @@ let g:syntastic_style_error_symbol = " "
 let g:syntastic_style_warning_symbol= " "
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
+" -------------------------------------------------------------------- */
+" Bookmark /*
+let g:bookmark_sign = ''
+let g:bookmark_annotation_sign = ''
+let g:bookmark_manage_per_buffer = 1
+let g:bookmark_center = 1
+
+highlight BookmarkSign ctermfg=214
+highlight BookmarkAnnotationSign ctermfg=160
+highlight BookmarkLine ctermbg=214
+highlight BookmarkAnnotationLine ctermbg=160
 " -------------------------------------------------------------------- */
 " Lightline /*
 let g:bufferline_show_bufnr = 0
@@ -352,9 +375,6 @@ if has("autocmd")
 	autocmd BufWritePre  * :%s/\s\+$//e
 endif
 " -------------------------------------------------------------------- */
-"Insert mode is always paste /*
-au InsertLeave * set nopaste
-" -------------------------------------------------------------------- */
 " File Explorer - Need Tree Alternative /*
 " >> Credit : http://ivanbrennan.nyc/blog/2014/01/16/rigging-vims-netrw/
 
@@ -410,5 +430,28 @@ let g:netrw_banner=0
 let g:netrw_liststyle=3
 let g:netrw_list_hide='\.pyc$,\.pyo$,\.o$,\.swp$,^\.svn/$,^\.DS_Store$'
 
-" ----------------------------------------------------------------- */ */
+" ------------------------------------------------------------------- */
+" Auto enable paste mode when pasting in insert mode /*
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+noremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+" -----------------------------------------------------------------*/ */
 " =======================================================================
