@@ -3,7 +3,6 @@
 # * HighForceX .ZshRc theme                                                  #
 # * Powerline-patched font (https://github.com/Lokaltog/powerline-fonts)     #
 # * fonts-font-awesome package                                               #
-#                                                                            #
 ##############################################################################
 
 ############################
@@ -140,7 +139,7 @@ prompt_end() {
 
 # Setup for user input
 prompt_cmd() {
-  echo -n "$ "
+  echo -e " "
 }
 
 ############################
@@ -160,7 +159,6 @@ build_lrg_prompt() {
   prompt_time
   prompt_git
   prompt_end
-  prompt_break
   prompt_cmd
 }
 
@@ -169,7 +167,6 @@ build_sml_prompt() {
   prompt_time
   prompt_git
   prompt_end
-  prompt_break
   prompt_cmd
 
 }
